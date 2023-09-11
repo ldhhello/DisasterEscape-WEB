@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="script.js"></script>
+
+    <style>
+        canvas {
+            /*position: absolute;*/
+            visibility: hidden; 
+            display: none;
+        }
+        #main_canvas {
+            display: block;
+            visibility: visible;
+        }
+        @font-face {
+            font-family: 'Gangwon';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
+        }
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="center" id="button_div">
+        <div>
+            <img src="logo.png" style="width: 22vw;">
+        </div>
+        <button id="start" onclick="onStartButtonClicked()" style="font-family: 'Gangwon'; margin: 10px; font-size: 1.8em;">플레이</button>
+    </div>
+
+    <div class="center">
+        <canvas id="main_canvas" width="2880" height="1536" style="width: 1440px; height: 768px;"></canvas>
+        <!-- <canvas id="main_canvas" width="1440" height="768" style="width: 1440px; height: 768px; display: none"></canvas> -->
+    </div>
+
+    <audio id="myAudio"></audio>
+</body>
+</html>
