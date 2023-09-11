@@ -190,7 +190,7 @@ const StopSound_ = () => {
 
 const StartSound_ = (is_loop) => {
     let audio = document.getElementById("myAudio");
-    let music = '/audio/' + Module.UTF8ToString(Module._data_buffer, 65536) + '.mp3';
+    let music = 'audio/' + Module.UTF8ToString(Module._data_buffer, 65536) + '.mp3';
 
     if(is_loop)
         audio.loop = true;
