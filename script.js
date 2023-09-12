@@ -274,20 +274,12 @@ startGame = () => {
     canvasList.push(canvas);
     contextList.push(context);
 
-    setTimeout(() => loadScript('test.js'), 1000);
+    loadScript('test.js');
 };
 
 keyboardQueue = new Queue();
 
-document.addEventListener('keydown', (event) => {
-    // if(event.keyCode == 37) {
-    //     alert('Left was pressed');
-    // }
-    // else if(event.keyCode == 39) {
-    //     alert('Right was pressed');
-    // }
-    //console.log(event.key);
-
+let onKeyPressed = (event) => {
     if(event.key == "ArrowUp")
         keyboardQueue.enqueue(72);
     else if(event.key == "ArrowLeft")
@@ -304,7 +296,9 @@ document.addEventListener('keydown', (event) => {
         keyboardQueue.enqueue(0x20);
     else
         keyboardQueue.enqueue(event.key.charCodeAt(0));
-});
+}
+
+document.addEventListener('keydown', onKeyPressed);
 
 const _kbhit = () => {
     return keyboardQueue.empty() ? 0 : 1;

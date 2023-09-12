@@ -43,6 +43,59 @@
             width: 100vw;
             height: 100vh;
         }
+        .joystick-left {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 9rem;
+            height: 9rem;
+            font-size: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .joystick-left button {
+            background-color:#ffffff77;
+            border-color: #33333377;
+            width: 3rem;
+            height: 3rem;
+        }
+        .joystick-left button :hover {
+            background-color: #000000aa;
+            border-color: #11111177;
+            width: 3rem;
+            height: 3rem;
+        }
+        .joystick-left .container {
+            width: 9rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .joystick-right {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            width: 9rem;
+            height: 9rem;
+            font-size: 3rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .joystick-right button {
+            background-color:#ffffff77;
+            border-color: #33333377;
+            width: 3rem;
+            height: 3rem;
+        }
+        .joystick-right button :hover {
+            background-color: #000000aa;
+            border-color: #11111177;
+            width: 3rem;
+            height: 3rem;
+        }
+        
     </style>
 </head>
 <body>
@@ -52,6 +105,22 @@
             <img src="logo.png" style="width: 22vw;">
         </div>
         <button id="start" onclick="onStartButtonClicked()" style="font-family: 'Gangwon'; margin: 10px; font-size: 1.8em;">플레이</button>
+    </div>
+
+    <div class="joystick-left">
+        <button onclick="onKeyPressed({key: 'ArrowUp'})"></button> <!--위쪽-->
+        <div class="container">
+            <button onclick="onKeyPressed({key: 'ArrowLeft'})"></button><!--왼쪽-->
+            <div style="width: 3rem;"></div>
+            <button onclick="onKeyPressed({key: 'ArrowRight'})"></button><!--오른쪽-->
+        </div>
+        <button onclick="onKeyPressed({key: 'ArrowDown'})"></button><!--아래쪽-->
+    </div>
+
+    <div class="joystick-right">
+        <button onclick="onKeyPressed({key: 'Escape'})">ESC</button> <!--ESC-->
+        <button onclick="onKeyPressed({key: 'Enter'})">Enter</button> <!--엔터-->
+        <button onclick="onKeyPressed({key: 'N'})">N</button> <!--N-->
     </div>
 
     <div class="center">
