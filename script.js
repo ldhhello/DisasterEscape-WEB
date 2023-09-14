@@ -30,6 +30,22 @@ let print_ = (str) => {
     console.log('==> ' + str);
 }
 
+let UTF16ToString = (ptr, max_sz) => {
+    ptr /= 4;
+    let i=0;
+
+    let res = "";
+
+    while(i < max_sz && Module.HEAP32[ptr+i] != 0) {
+        res += String.fromCharCode(Module.HEAP32[ptr+i]);
+        i++;
+    }
+
+    return res;
+}
+
+
+
 var Module = {'print': print_};
 
 let imageFilenameList = {};
@@ -84,6 +100,8 @@ function set_font_(context_id, size) {
 
     if(fontName == '강원교육튼튼')
         fontName = 'Gangwon';
+    if(fontName == 'Galmuri11 Regular')
+        fontName = 'Galmuri11';
 
     fontName += ', sans-serif';
 
@@ -149,6 +167,8 @@ const CreateCompatibleDC_ = () => {
     //contextList.push(context);
     canvasList[idx] = canvas;
     contextList[idx] = context;
+
+    context.imageSmoothingEnabled = false;
 
     return idx;
 }
@@ -262,12 +282,62 @@ const DrawText_ = (context_id, x, y, align, r, g, b, width) => {
     drawTextBox(context, str, x, y, width, 1.1);
 }
 
+const mciSendString = (str) => {
+    let arr = str.split(' ');
+    if(arr[0] == 'play') {
+        //console.log('PLAY ' + arr[1]);
+
+        let audio = document.getElementById(arr[1]);
+
+        if(audio == undefined) {
+            audio = new Audio();
+            audio.id = arr[1];
+            audio.src = 'audio/' + arr[1] + '.mp3';
+            document.getElementsByTagName('body')[0].appendChild(audio);
+        }
+        
+        audio.play();
+    }
+    else if(arr[0] == 'stop') {
+        //console.log('STOP ' + arr[1]);
+
+        let audio = document.getElementById(arr[1]);
+
+        if(audio != undefined) {
+            audio.pause();
+        }
+    }
+}
+
+const mciSendStringA_ = () => {
+    let str = Module.UTF8ToString(Module._data_buffer, 65536);
+    mciSendString(str);
+}
+
+const mciSendStringW_ = () => {
+    let str = UTF16ToString(Module._wide_buffer, 65536);
+    mciSendString(str);
+}
+
+const mciSendStringW_play = () => {
+    let str = UTF16ToString(Module._wide_buffer, 65536);
+    mciSendString('play ' + str);
+}
+
+const mciSendStringW_stop = () => {
+    let str = UTF16ToString(Module._wide_buffer, 65536);
+    mciSendString('stop ' + str);
+}
+
+
 
 startGame = () => {
     canvas = document.getElementById('main_canvas');
     context = canvas.getContext("2d");
     context.font = "40px sans-serif";
     context.textBaseline = "top";
+
+    context.imageSmoothingEnabled = false;
 
     //context.scale(2, 2);
 
@@ -294,6 +364,12 @@ let onKeyPressed = (event) => {
         keyboardQueue.enqueue(0x1b);
     else if(event.key == "Space")
         keyboardQueue.enqueue(0x20);
+    else if(event.key == "Tab") {
+        keyboardQueue.enqueue(0x9);
+
+        event.preventDefault();
+        event.stopPropagation();
+    }
     else
         keyboardQueue.enqueue(event.key.charCodeAt(0));
 }
@@ -301,6 +377,7 @@ let onKeyPressed = (event) => {
 document.addEventListener('keydown', onKeyPressed);
 
 const _kbhit = () => {
+    //console.log('kbhit res: ' + keyboardQueue.empty());
     return keyboardQueue.empty() ? 0 : 1;
 }
 
