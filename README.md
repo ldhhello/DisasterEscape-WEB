@@ -8,3 +8,5 @@
 [여기](https://ldhhello.github.io/DisasterEscape-WEB/)로 가셔서 플레이해보실 수 있습니다.
 
 - 주의. 초기 로딩 시 셀룰러 데이터를 많이 사용할 수 있습니다. 약 60MB정도 사용합니다.
+
+- [DisasterEscape 깃헙 링크](https://github.com/ldhhello/DisasterEscape)
